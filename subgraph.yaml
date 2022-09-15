@@ -1,0 +1,44 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Factory
+    network: moonbeam
+    source:
+      address: "0x079710316b06BBB2c0FF4bEFb7D2DaC206c716A0"
+      abi: Factory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - BootstrapSetted
+        - Candidate
+        - FeeBasePointUpdated
+        - FeetoUpdated
+        - PairCreateLocked
+        - PairCreateUnlocked
+        - PairCreated
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+      eventHandlers:
+        - event: AdminChanged(indexed address,indexed address)
+          handler: handleAdminChanged
+        - event: BootstrapSetted(indexed address,indexed address,indexed address)
+          handler: handleBootstrapSetted
+        - event: Candidate(indexed address)
+          handler: handleCandidate
+        - event: FeeBasePointUpdated(uint8)
+          handler: handleFeeBasePointUpdated
+        - event: FeetoUpdated(indexed address)
+          handler: handleFeetoUpdated
+        - event: PairCreateLocked(indexed address)
+          handler: handlePairCreateLocked
+        - event: PairCreateUnlocked(indexed address)
+          handler: handlePairCreateUnlocked
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handlePairCreated
+      file: ./src/factory.ts
